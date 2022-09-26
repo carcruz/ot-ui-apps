@@ -15,9 +15,9 @@ import { epmcUrl } from '../../../utils/urls';
 import { sentenceCase } from '../../../utils/global';
 import SectionItem from '../../../components/Section/SectionItem';
 import Tooltip from '../../../components/Tooltip';
-import usePlatformApi from '../../../hooks/usePlatformApi';
+// import usePlatformApi from '../../../hooks/usePlatformApi';
 
-import Summary from './Summary';
+// import Summary from './Summary';
 import { dataTypesMap } from '../../../dataTypes';
 
 import CLINVAR_QUERY from './ClinvarQuery.gql';
@@ -247,15 +247,19 @@ function fetchClinvar(ensemblId, efoId, cursor, size) {
 
 function Body({ definition, id, label }) {
   const { ensgId: ensemblId, efoId } = id;
-  const { data: summaryData } = usePlatformApi(Summary.fragments.evaSummary);
-  const count = summaryData.evaSummary.count; // reuse the count that was fetched in the summary query
+  // const { data: summaryData } = usePlatformApi(Summary.fragments.evaSummary);
+  // const count = summaryData.evaSummary.count; // reuse the count that was fetched in the summary query
+  const countCutoff = 1000;
   const [initialLoading, setInitialLoading] = useState(true); // state variable to keep track of initial loading of rows
   const [loading, setLoading] = useState(false); // state variable to keep track of loading state on page chage
   const [cursor, setCursor] = useState('');
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const variables = { ensemblId, efoId, size: count > 1000 ? 100 : count };
+  const [count, setCount] = useState(0);
+  // const variables = { ensemblId, efoId, size: count > 1000 ? 100 : count };
+  // const getSize = () => (countCutoff > 1000 ? 100 : countCutoff);
+  const variables = { ensemblId, efoId, size: countCutoff };
 
   useEffect(
     () => {
@@ -265,14 +269,22 @@ function Body({ definition, id, label }) {
       // so just fetch 100 rows for the initial page. If there's less
       // than 1000 rows, just fetch all rows at once and do client side
       // paging
-      fetchClinvar(ensemblId, efoId, '', count > 1000 ? 100 : count).then(
+      // fetchClinvar(ensemblId, efoId, '', count > 1000 ? 100 : count).then(
+      
+      // Make query for 1000 (countCutoff) rows and get exact count.
+      // Set count based on this first query.
+      // If count is less than 1000, display all rows in simple table.
+      // If more than 1000, display the first 1000 in table,
+      // then we'll paginate (server side) anything above 1000.
+      fetchClinvar(ensemblId, efoId, '', countCutoff ).then(
         res => {
-          const { cursor, rows } = res.data.disease.evidences;
+          const { cursor, rows, count } = res.data.disease.evidences;
 
           if (isCurrent) {
             setInitialLoading(false);
             setCursor(cursor);
             setRows(rows);
+            setCount(count);
           }
         }
       );
@@ -327,7 +339,8 @@ function Body({ definition, id, label }) {
       renderBody={() => {
         // depending on count, decide whether to use the server side paging
         // Table component or the client side paging DataTable component
-        return count > 1000 ? (
+        // TODO: investigate whether this can be simplified
+        return count > countCutoff ? (
           <Table
             loading={loading}
             columns={columns}
