@@ -1,13 +1,13 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Typography } from '@material-ui/core';
-import usePlatformApi from '../../../hooks/usePlatformApi';
+// import usePlatformApi from '../../../hooks/usePlatformApi';
 import { dataTypesMap } from '../../../dataTypes';
 import SectionItem from '../../../components/Section/SectionItem';
 import { DataTable } from '../../../components/Table';
 import Tooltip from '../../../components/Tooltip';
 import ScientificNotation from '../../../components/ScientificNotation';
-import Summary from './Summary';
+// import Summary from './Summary';
 import Description from './Description';
 import Link from '../../../components/Link';
 import { sentenceCase } from '../../../utils/global';
@@ -116,14 +116,14 @@ const columns = [
 
 function Body({ definition, id, label }) {
   const { ensgId: ensemblId, efoId } = id;
-  const { data: summaryData } = usePlatformApi(
-    Summary.fragments.expressionAtlasSummary
-  );
+  // const { data: summaryData } = usePlatformApi(
+  //   Summary.fragments.expressionAtlasSummary
+  // );
 
   const variables = {
     ensemblId,
     efoId,
-    size: summaryData.expressionAtlasSummary.count,
+    // size: summaryData.expressionAtlasSummary.count,
   };
 
   const request = useQuery(EXPRESSION_ATLAS_QUERY, {

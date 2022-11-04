@@ -2,12 +2,12 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { Link } from '@material-ui/core';
-import usePlatformApi from '../../../hooks/usePlatformApi';
+// import usePlatformApi from '../../../hooks/usePlatformApi';
 import SectionItem from '../../../components/Section/SectionItem';
 import { DataTable, TableDrawer } from '../../../components/Table';
 import { dataTypesMap } from '../../../dataTypes';
 import { naLabel } from '../../../constants';
-import Summary from './Summary';
+// import Summary from './Summary';
 import Description from './Description';
 
 import CRISPR_QUERY from './CrisprQuery.gql';
@@ -55,12 +55,12 @@ const columns = [
 
 function Body({ definition, id, label }) {
   const { ensgId: ensemblId, efoId } = id;
-  const { data: summaryData } = usePlatformApi(Summary.fragments.crisprSummary);
+  // const { data: summaryData } = usePlatformApi(Summary.fragments.crisprSummary);
 
   const variables = {
     ensemblId,
     efoId,
-    size: summaryData.crisprSummary.count,
+    // size: summaryData.crisprSummary.count,
   };
 
   const request = useQuery(CRISPR_QUERY, {

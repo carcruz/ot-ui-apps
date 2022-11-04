@@ -27,6 +27,7 @@ function DataTable({
   loading,
   query,
   variables,
+  rowCount,
 }) {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -89,7 +90,7 @@ function DataTable({
       dataDownloaderRows={processedRows}
       columns={columns}
       rows={getPage(processedRows, page, pageSize)}
-      rowCount={processedRows.length}
+      rowCount={rowCount || processedRows.length}
       onGlobalFilterChange={handleGlobalFilterChange}
       onSortBy={handleSortBy}
       onPageChange={handlePageChange}

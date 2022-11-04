@@ -13,8 +13,8 @@ import { epmcUrl } from '../../../utils/urls';
 import { identifiersOrgLink, sentenceCase } from '../../../utils/global';
 import Link from '../../../components/Link';
 import SectionItem from '../../../components/Section/SectionItem';
-import Summary from './Summary';
-import usePlatformApi from '../../../hooks/usePlatformApi';
+// import Summary from './Summary';
+// import usePlatformApi from '../../../hooks/usePlatformApi';
 
 import CANCER_GENE_CENSUS_QUERY from './sectionQuery.gql';
 
@@ -132,14 +132,14 @@ const useStyles = makeStyles({
 function Body({ definition, id, label }) {
   const classes = useStyles();
   const { ensgId: ensemblId, efoId } = id;
-  const { data: summaryData } = usePlatformApi(
-    Summary.fragments.CancerGeneCensusSummary
-  );
+  // const { data: summaryData } = usePlatformApi(
+  //   Summary.fragments.CancerGeneCensusSummary
+  // );
 
   const variables = {
     ensemblId,
     efoId,
-    size: summaryData.cancerGeneCensusSummary.count,
+    // size: summaryData.cancerGeneCensusSummary.count,
   };
 
   const request = useQuery(CANCER_GENE_CENSUS_QUERY, {

@@ -2,13 +2,13 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Typography } from '@material-ui/core';
 import Link from '../../../components/Link';
-import usePlatformApi from '../../../hooks/usePlatformApi';
+// import usePlatformApi from '../../../hooks/usePlatformApi';
 import SectionItem from '../../../components/Section/SectionItem';
 import Tooltip from '../../../components/Tooltip';
 import { DataTable } from '../../../components/Table';
 import { defaultRowsPerPageOptions, naLabel } from '../../../constants';
 import { dataTypesMap } from '../../../dataTypes';
-import Summary from './Summary';
+// import Summary from './Summary';
 import Description from './Description';
 
 import CLINGEN_QUERY from './ClingenQuery.gql';
@@ -99,14 +99,14 @@ const columns = [
 function Body(props) {
   const { definition, id, label } = props;
   const { ensgId: ensemblId, efoId } = id;
-  const { data: summaryData } = usePlatformApi(
-    Summary.fragments.ClinGenSummaryFragment
-  );
+  // const { data: summaryData } = usePlatformApi(
+  //   Summary.fragments.ClinGenSummaryFragment
+  // );
 
   const variables = {
     ensemblId,
     efoId,
-    size: summaryData.clingenSummary.count,
+    // size: summaryData.clingenSummary.count,
   };
 
   const request = useQuery(CLINGEN_QUERY, {

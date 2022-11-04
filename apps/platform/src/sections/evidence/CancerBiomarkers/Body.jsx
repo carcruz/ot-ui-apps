@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Typography } from '@material-ui/core';
 import Link from '../../../components/Link';
-import usePlatformApi from '../../../hooks/usePlatformApi';
+// import usePlatformApi from '../../../hooks/usePlatformApi';
 import SectionItem from '../../../components/Section/SectionItem';
 import Tooltip from '../../../components/Tooltip';
 import { DataTable, TableDrawer } from '../../../components/Table';
@@ -15,6 +15,16 @@ import BiomarkersDrawer from './BiomarkersDrawer';
 
 import CANCER_BIOMARKERS_EVIDENCE_QUERY from './CancerBiomarkersEvidence.gql';
 
+//
+// Exploring approaches to remove the size param from the query.
+// 1. Use a fixed size, rather than the count from the summary widget
+// 
+// If we were to opt for this approach, then
+// this should probably live in the constants file
+// NOTE: the API currently imposes a limit on the size;
+// if the size is too large, the API returns nothing
+//
+const querySize = 10000;
 const columns = [
   {
     id: 'disease.name',
@@ -108,16 +118,16 @@ const columns = [
 function Body(props) {
   const { definition, id, label } = props;
   const { ensgId: ensemblId, efoId } = id;
-  const {
-    data: {
-      disease: { cancerBiomarkersSummary },
-    },
-  } = usePlatformApi();
+  // const {
+  //   data: {
+  //     disease 
+  //   },
+  // } = usePlatformApi();
 
   const variables = {
     ensemblId,
     efoId,
-    size: cancerBiomarkersSummary.count,
+    size: querySize,
   };
 
   const request = useQuery(CANCER_BIOMARKERS_EVIDENCE_QUERY, {

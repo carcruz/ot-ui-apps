@@ -249,7 +249,7 @@ function Body({ definition, id, label }) {
   const { ensgId: ensemblId, efoId } = id;
   // const { data: summaryData } = usePlatformApi(Summary.fragments.evaSummary);
   // const count = summaryData.evaSummary.count; // reuse the count that was fetched in the summary query
-  const countCutoff = 1000;
+  const countCutoff = 100;
   const [initialLoading, setInitialLoading] = useState(true); // state variable to keep track of initial loading of rows
   const [loading, setLoading] = useState(false); // state variable to keep track of loading state on page chage
   const [cursor, setCursor] = useState('');

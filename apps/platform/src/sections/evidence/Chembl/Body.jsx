@@ -19,6 +19,12 @@ import { makeStyles } from '@material-ui/core';
 
 import CHEMBL_QUERY from './ChemblQuery.gql';
 
+//
+// Exploring approaches to remove the size param from the query.
+// 2. Make two queries: we fetch the count/size if not already available 
+// from the summary (i.e. the case where widget is loaded on its own)
+//
+
 const useStyles = makeStyles(theme => ({
   tooltipContainer: {
     padding: '0.3em',
@@ -219,7 +225,7 @@ function Body({ definition, id, label }) {
     Summary.fragments.ChemblSummaryFragment
   );
 
-  const variables = { ensemblId, efoId, size: summaryData.chemblSummary.count };
+  const variables = { ensemblId, efoId };
 
   const request = useQuery(CHEMBL_QUERY, {
     variables,

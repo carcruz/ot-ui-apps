@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Box, Typography, makeStyles } from '@material-ui/core';
-import usePlatformApi from '../../../hooks/usePlatformApi';
+// import usePlatformApi from '../../../hooks/usePlatformApi';
 import { sentenceCase } from '../../../utils/global';
 import SectionItem from '../../../components/Section/SectionItem';
 import ChipList from '../../../components/ChipList';
@@ -15,7 +15,7 @@ import {
 } from '../../../constants';
 import Tooltip from '../../../components/Tooltip';
 import ClinvarStars from '../../../components/ClinvarStars';
-import Summary from './Summary';
+// import Summary from './Summary';
 import Description from './Description';
 import Link from '../../../components/Link';
 import { dataTypesMap } from '../../../dataTypes';
@@ -226,14 +226,14 @@ const useStyles = makeStyles({
 function Body({ definition, id, label }) {
   const classes = useStyles();
   const { ensgId: ensemblId, efoId } = id;
-  const { data: summaryData } = usePlatformApi(
-    Summary.fragments.evaSomaticSummary
-  );
+  // const { data: summaryData } = usePlatformApi(
+  //  Summary.fragments.evaSomaticSummary
+  // );
 
   const variables = {
     ensemblId,
     efoId,
-    size: summaryData.evaSomaticSummary.count,
+    // size: summaryData.evaSomaticSummary.count,
   };
 
   const request = useQuery(EVA_SOMATIC_QUERY, {
