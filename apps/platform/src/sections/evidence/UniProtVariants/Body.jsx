@@ -15,6 +15,7 @@ import Description from './Description';
 import { dataTypesMap } from '../../../dataTypes';
 
 import UNIPROT_VARIANTS_QUERY from './UniprotVariantsQuery.gql';
+import UNIPROT_VARIANTS_SUMMARY from './UniprotVariantsSummaryQuery.gql';
 
 const columns = [
   {
@@ -89,16 +90,27 @@ const columns = [
   },
 ];
 
-function Body({ definition, id, label }) {
-  const { ensgId: ensemblId, efoId } = id;
+export function Body({ definition, id, label }) {
   const { data: summaryData } = usePlatformApi(
-    Summary.fragments.UniprotVariantsSummary
-  );
+      Summary.fragments.UniprotVariantsSummary
+    );
 
+    const count = summaryData.uniprotVariantsSummary.count;
+    
+    if(!count || count < 1) {
+      return null
+    }
+
+    return <BodyClear definition={definition} id={id} count={count} label={label} />
+
+}
+
+export function BodyClear({ definition, id, label, count }) {
+  const { ensgId: ensemblId, efoId } = id;
   const variables = {
     ensemblId,
     efoId,
-    size: summaryData.uniprotVariantsSummary.count,
+    size: count,
   };
 
   const request = useQuery(UNIPROT_VARIANTS_QUERY, {
@@ -130,5 +142,3 @@ function Body({ definition, id, label }) {
     />
   );
 }
-
-export default Body;

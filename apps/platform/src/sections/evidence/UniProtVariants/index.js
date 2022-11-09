@@ -1,3 +1,4 @@
+
 export const definition = {
   id: 'uniprotVariants',
   name: 'UniProt variants',
@@ -6,4 +7,5 @@ export const definition = {
 };
 
 export { default as Summary } from './Summary';
-export { default as Body } from './Body';
+export * from './Body';
+
