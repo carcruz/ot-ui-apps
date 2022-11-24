@@ -18,7 +18,6 @@ import {
   literaturesEuropePMCQuery,
   parsePublications,
   tablePageState,
-  litsCountState,
   litsCursorState,
   literatureState,
   fetchSimilarEntities,
