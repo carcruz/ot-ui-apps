@@ -5,6 +5,9 @@ import {
   litsCountState,
   loadingEntitiesState,
   tablePageSizeState,
+  litsIdsState,
+  displayedPublications,
+  filteredLitsCountState,
 } from './atoms';
 
 const useStyles = makeStyles(() => ({
@@ -17,7 +20,8 @@ const useStyles = makeStyles(() => ({
 function CountInfo() {
   const classes = useStyles();
   const pageSize = useRecoilValue(tablePageSizeState);
-  const count = useRecoilValue(litsCountState);
+  const count = useRecoilValue(filteredLitsCountState);
+  const displayedPubs = useRecoilValue(displayedPublications);
   const loadingEntities = useRecoilValue(loadingEntitiesState);
 
   if (loadingEntities)
@@ -25,7 +29,9 @@ function CountInfo() {
 
   return (
     <Typography variant="body2" className={classes.resultCount}>
-      Showing {count > pageSize ? pageSize : count} of {count} results
+      Showing{' '}
+      {displayedPubs.length > pageSize ? pageSize : displayedPubs.length} of{' '}
+      {count} results
     </Typography>
   );
 }

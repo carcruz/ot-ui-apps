@@ -34,13 +34,8 @@ function LiteratureList({ id, name, entity, BODY_QUERY }) {
   const resetLiteratureState = useResetRecoilState(literatureState);
 
   const bibliographyState = useRecoilValue(literatureState);
-  const {
-    category,
-    startYear,
-    startMonth,
-    endYear,
-    endMonth,
-  } = bibliographyState;
+  const { category, startYear, startMonth, endYear, endMonth } =
+    bibliographyState;
 
   useEffect(
     () => {
@@ -63,6 +58,7 @@ function LiteratureList({ id, name, entity, BODY_QUERY }) {
             publication: null,
           })),
           litsCount: data.literatureOcurrences?.count,
+          filteredLitsCount: data.literatureOcurrences?.filteredCount,
           earliestPubYear: data.literatureOcurrences?.earliestPubYear,
           cursor: data.literatureOcurrences?.cursor,
           id,

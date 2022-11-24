@@ -17,7 +17,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 const monthsBtwnDates = (startDate, endDate) => {
   return Math.max(
     (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-    (endDate.getMonth() - startDate.getMonth()),
+      (endDate.getMonth() - startDate.getMonth()),
     0
   );
 };
@@ -26,9 +26,8 @@ export const DateFilter = () => {
   const [filterDate, setFilterDate] = useState([0, 100]);
   const [numberOfMonths, setNumberOfMonths] = useState(0);
   const setLiteratureUpdate = useSetRecoilState(updateLiteratureState);
-  const [loadingEntities, setLoadingEntities] = useRecoilState(
-    loadingEntitiesState
-  );
+  const [loadingEntities, setLoadingEntities] =
+    useRecoilState(loadingEntitiesState);
   const {
     query,
     id,
@@ -43,17 +42,14 @@ export const DateFilter = () => {
     cursor,
   } = useRecoilValue(literatureState);
 
-  useEffect(
-    () => {
-      let limit = monthsBtwnDates(
-        new Date(`${earliestPubYear}-01-01`),
-        new Date()
-      );
-      setNumberOfMonths(limit);
-      setFilterDate([0, limit]);
-    },
-    [earliestPubYear]
-  );
+  useEffect(() => {
+    let limit = monthsBtwnDates(
+      new Date(`${earliestPubYear}-01-01`),
+      new Date()
+    );
+    setNumberOfMonths(limit);
+    setFilterDate([0, limit]);
+  }, [earliestPubYear]);
 
   useEffect(() => {
     setFilterDate([0, numberOfMonths]);
@@ -77,6 +73,7 @@ export const DateFilter = () => {
     const update = {
       entities: data.similarEntities,
       loadingEntities: false,
+      page: 0,
       category,
       startYear,
       startMonth,
@@ -88,6 +85,7 @@ export const DateFilter = () => {
         publication: null,
       })),
       litsCount: data.literatureOcurrences?.count,
+      filteredLitsCount: data.literatureOcurrences?.filteredCount,
       earliestPubYear: data.literatureOcurrences?.earliestPubYear,
       ...values,
     };
@@ -99,10 +97,16 @@ export const DateFilter = () => {
     return new Date(from.setMonth(from.getMonth() + value));
   };
 
-  function valueLabelFormat(value) {
+  function valueLabelFormat(value, idx) {
     if (earliestPubYear) {
       const labelDate = selectedDate(value);
-      return `${labelDate.getFullYear()}-${labelDate.getMonth() + 1}`;
+      return (
+        <span
+          style={{ position: 'absolute', left: -20, top: idx === 0 ? 55 : 10 }}
+        >
+          {`${labelDate.getFullYear()}-${labelDate.getMonth() + 1}`}
+        </span>
+      );
     } else {
       return value;
     }
@@ -179,7 +183,6 @@ const IOSSlider = withStyles(theme => ({
   active: {},
   valueLabel: {
     left: 'calc(-50% + 4px)',
-    top: -22,
     whiteSpace: 'nowrap',
     '& *': {
       background: 'transparent',

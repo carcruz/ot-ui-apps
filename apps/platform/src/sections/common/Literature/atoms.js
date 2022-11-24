@@ -46,6 +46,7 @@ export const literatureState = atom({
     page: 0,
     pageSize: 5,
     litsCount: 0,
+    filteredLitsCount: 0,
     loadingEntities: false,
   },
 });
@@ -116,6 +117,14 @@ export const litsCountState = selector({
   },
 });
 
+export const filteredLitsCountState = selector({
+  key: 'filteredLitsCountState',
+  get: ({ get }) => {
+    const { filteredLitsCount } = get(literatureState);
+    return filteredLitsCount;
+  },
+});
+
 export const litsIdsState = selector({
   key: 'litsIdsState',
   get: ({ get }) => {
@@ -176,17 +185,21 @@ export const updateLiteratureState = selector({
 // ------------------------------------------
 export const literaturesEuropePMCQuery = selectorFamily({
   key: 'literaturesEuropePMCQuery',
-  get: ({ literaturesIds }) => async () => {
-    if (literaturesIds.length === 0) return [];
-    const { baseUrl, requestOptions } = europePmcBiblioSearchPOSTQuery(
-      literaturesIds
-    );
-    const response = await fetchLiteraturesFromPMC({ baseUrl, requestOptions });
-    if (response.error) {
-      throw response.error;
-    }
-    return response.resultList?.result;
-  },
+  get:
+    ({ literaturesIds }) =>
+    async () => {
+      if (literaturesIds.length === 0) return [];
+      const { baseUrl, requestOptions } =
+        europePmcBiblioSearchPOSTQuery(literaturesIds);
+      const response = await fetchLiteraturesFromPMC({
+        baseUrl,
+        requestOptions,
+      });
+      if (response.error) {
+        throw response.error;
+      }
+      return response.resultList?.result;
+    },
 });
 
 const fetchLiteraturesFromPMC = async ({ baseUrl, requestOptions }) =>
