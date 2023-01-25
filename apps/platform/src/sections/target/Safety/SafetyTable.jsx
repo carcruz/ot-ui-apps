@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowAltCircleDown,
   faArrowAltCircleUp,
+  faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { naLabel, defaultRowsPerPageOptions } from '../../../constants';
@@ -159,6 +160,19 @@ function getColumns(classes) {
       label: 'Experimental studies',
       renderCell: ({ study }) => {
         return <SafetyStudiesDrawer studies={study} />;
+      },
+    },
+    {
+      id: 'isHumanApplicable',
+      label: 'Human applicability',
+      renderCell: ({ isHumanApplicable }) => {
+        return isHumanApplicable ? 
+      <FontAwesomeIcon
+        icon={faCheckCircle}
+        className={classes.blue}
+        size='lg'
+      />
+    : null;
       },
     },
     {
