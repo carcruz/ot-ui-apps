@@ -59,9 +59,7 @@ function getColumns(classes) {
       filterValue: ({ biosample }) => {
         if (biosample.length === 1) {
           const sample = biosample[0];
-          return `${sample.cellFormat} ${sample.cellLabel} ${
-            sample.tissueLabel
-          }`.trim();
+          return `${sample.cellFormat} ${sample.cellLabel} ${sample.tissueLabel}`.trim();
         }
         return 'biosamples';
       },
@@ -166,13 +164,15 @@ function getColumns(classes) {
       id: 'isHumanApplicable',
       label: 'Human applicability',
       renderCell: ({ isHumanApplicable }) => {
-        return isHumanApplicable ? 
-      <FontAwesomeIcon
-        icon={faCheckCircle}
-        className={classes.blue}
-        size='lg'
-      />
-    : null;
+        return isHumanApplicable ? (
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            className={classes.blue}
+            size="lg"
+          />
+        ) : (
+          naLabel
+        );
       },
     },
     {
