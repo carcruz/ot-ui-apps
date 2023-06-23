@@ -21,6 +21,8 @@
     "build:platform": "turbo run build --filter=platform",
     "dev:platform:ppp": "turbo run dev-ppp --filter=platform",
     "build:platform:ppp": "turbo run build-ppp --filter=platform",
+    "dev:theorem": "turbo run dev --filter=theorem",
+    "build:theorem": "turbo run build --filter=theorem",
     "lint": "turbo run lint",
     "lint:platform": "turbo run lint --filter=platform",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
